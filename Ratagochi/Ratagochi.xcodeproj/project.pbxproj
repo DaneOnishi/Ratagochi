@@ -7,18 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C062F9652C5EE1CB009F2281 /* RatEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062F9642C5EE1CB009F2281 /* RatEvents.swift */; };
 		C0DCDC1A2C5DD348009A67BC /* RatagochiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC192C5DD348009A67BC /* RatagochiApp.swift */; };
 		C0DCDC1C2C5DD348009A67BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC1B2C5DD348009A67BC /* ContentView.swift */; };
 		C0DCDC1E2C5DD349009A67BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0DCDC1D2C5DD349009A67BC /* Assets.xcassets */; };
 		C0DCDC212C5DD349009A67BC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0DCDC202C5DD349009A67BC /* Preview Assets.xcassets */; };
+		C0DCDC452C5EDC6E009A67BC /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC442C5EDC6E009A67BC /* AppState.swift */; };
+		C0DCDC492C5EDD80009A67BC /* EventBusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC482C5EDD80009A67BC /* EventBusService.swift */; };
+		C0DCDC4B2C5EDD8B009A67BC /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC4A2C5EDD8B009A67BC /* DatabaseService.swift */; };
+		C0DCDC512C5EDDEA009A67BC /* Rat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC502C5EDDEA009A67BC /* Rat.swift */; };
+		C0DCDC542C5EDDFE009A67BC /* RatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC532C5EDDFE009A67BC /* RatService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C062F9642C5EE1CB009F2281 /* RatEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatEvents.swift; sourceTree = "<group>"; };
 		C0DCDC162C5DD348009A67BC /* Ratagochi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ratagochi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0DCDC192C5DD348009A67BC /* RatagochiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatagochiApp.swift; sourceTree = "<group>"; };
 		C0DCDC1B2C5DD348009A67BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C0DCDC1D2C5DD349009A67BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0DCDC202C5DD349009A67BC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C0DCDC442C5EDC6E009A67BC /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		C0DCDC482C5EDD80009A67BC /* EventBusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBusService.swift; sourceTree = "<group>"; };
+		C0DCDC4A2C5EDD8B009A67BC /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		C0DCDC502C5EDDEA009A67BC /* Rat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rat.swift; sourceTree = "<group>"; };
+		C0DCDC532C5EDDFE009A67BC /* RatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +64,12 @@
 			isa = PBXGroup;
 			children = (
 				C0DCDC192C5DD348009A67BC /* RatagochiApp.swift */,
+				C0DCDC442C5EDC6E009A67BC /* AppState.swift */,
 				C0DCDC1B2C5DD348009A67BC /* ContentView.swift */,
 				C0DCDC1D2C5DD349009A67BC /* Assets.xcassets */,
+				C0DCDC4C2C5EDD99009A67BC /* Features */,
+				C0DCDC412C5EDC33009A67BC /* Core */,
+				C0DCDC432C5EDC66009A67BC /* UI */,
 				C0DCDC1F2C5DD349009A67BC /* Preview Content */,
 			);
 			path = Ratagochi;
@@ -65,6 +81,80 @@
 				C0DCDC202C5DD349009A67BC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C0DCDC412C5EDC33009A67BC /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCDC472C5EDD6D009A67BC /* Services */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		C0DCDC422C5EDC38009A67BC /* Design System */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Design System";
+			sourceTree = "<group>";
+		};
+		C0DCDC432C5EDC66009A67BC /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCDC422C5EDC38009A67BC /* Design System */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		C0DCDC472C5EDD6D009A67BC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCDC482C5EDD80009A67BC /* EventBusService.swift */,
+				C0DCDC4A2C5EDD8B009A67BC /* DatabaseService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		C0DCDC4C2C5EDD99009A67BC /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCDC4E2C5EDDC9009A67BC /* Ratagochi */,
+				C0DCDC4D2C5EDDBB009A67BC /* Rat */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		C0DCDC4D2C5EDDBB009A67BC /* Rat */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCDC522C5EDDF6009A67BC /* Services */,
+				C0DCDC4F2C5EDDD8009A67BC /* Models */,
+			);
+			path = Rat;
+			sourceTree = "<group>";
+		};
+		C0DCDC4E2C5EDDC9009A67BC /* Ratagochi */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Ratagochi;
+			sourceTree = "<group>";
+		};
+		C0DCDC4F2C5EDDD8009A67BC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCDC502C5EDDEA009A67BC /* Rat.swift */,
+				C062F9642C5EE1CB009F2281 /* RatEvents.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C0DCDC522C5EDDF6009A67BC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCDC532C5EDDFE009A67BC /* RatService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +173,8 @@
 			dependencies = (
 			);
 			name = Ratagochi;
+			packageProductDependencies = (
+			);
 			productName = Ratagochi;
 			productReference = C0DCDC162C5DD348009A67BC /* Ratagochi.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +203,8 @@
 				Base,
 			);
 			mainGroup = C0DCDC0D2C5DD348009A67BC;
+			packageReferences = (
+			);
 			productRefGroup = C0DCDC172C5DD348009A67BC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,8 +231,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0DCDC542C5EDDFE009A67BC /* RatService.swift in Sources */,
+				C0DCDC452C5EDC6E009A67BC /* AppState.swift in Sources */,
+				C0DCDC4B2C5EDD8B009A67BC /* DatabaseService.swift in Sources */,
+				C0DCDC492C5EDD80009A67BC /* EventBusService.swift in Sources */,
+				C062F9652C5EE1CB009F2281 /* RatEvents.swift in Sources */,
 				C0DCDC1C2C5DD348009A67BC /* ContentView.swift in Sources */,
 				C0DCDC1A2C5DD348009A67BC /* RatagochiApp.swift in Sources */,
+				C0DCDC512C5EDDEA009A67BC /* Rat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
