@@ -9,8 +9,11 @@ import Foundation
 import Combine
 
 class AppState: ObservableObject {
-    @Published private(set) var rats: [UUID: RatModel] = [:]
     @Published var notifications: [Notification] = []
+    
+//    MARK: Rat Management
+    @Published private(set) var rats: [UUID: RatModel] = [:]
+    @Published var currentRat: RatModel?
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -27,12 +30,15 @@ class AppState: ObservableObject {
         EventBus.shared.publish(RequestAllRatsEvent())
     }
     
+//    MARK: Event Handling
     private func handleEvent(_ event: any EventProtocol) {
         switch event {
         case let notificationEvent as NotificationEvent:
             handleNotificationEvent(notificationEvent)
         case let ratStateEvent as RatStateChangedEvent:
             handleRatStateChangedEvent(ratStateEvent)
+        case let ratDeletedEvent as RatDeletedEvent:
+            handleRatDeletedEvent(ratDeletedEvent)
         default:
             Logger.debug("Unhandled event type: \(type(of: event))")
         }
@@ -47,24 +53,29 @@ class AppState: ObservableObject {
     
     private func handleRatStateChangedEvent(_ event: RatStateChangedEvent) {
         Logger.debug("Got event: \(event)")
-        updateRat(event.newRat)
-    }
-    
-    private func handleRequestAllRatsStateEvent(_ event: RequestAllRatsEvent) {
-
-    }
-    
-    private func updateRat(_ rat: RatModel) {
-        Logger.debug("Updating rat: \(rat)")
+        let rat = event.newRat
         rats[rat.id] = rat
+        
+        if currentRat?.id == rat.id {
+            loadRat(withID: rat.id)
+        }
     }
     
-    func getRat(withID id: UUID) -> RatModel? {
-        return rats[id]
+    private func handleRatDeletedEvent(_ event: RatDeletedEvent) {
+        Logger.debug("Deleting rat: \(event.ratId)")
+        rats[event.ratId] = nil
+        
+        if currentRat?.id == event.ratId {
+            clearCurrentRat()
+        }
+    }
+
+    func loadRat(withID id: UUID) {
+        currentRat = rats[id]
     }
     
-    func publisherForRat(withID id: UUID) -> AnyPublisher<RatModel?, Never> {
-        return $rats.map { $0[id] }.eraseToAnyPublisher()
+    func clearCurrentRat() {
+        currentRat = nil
     }
     
 }
@@ -72,5 +83,5 @@ class AppState: ObservableObject {
 
 struct RequestAllRatsEvent: EventProtocol {
     static var eventType: String { "requestAllRats" }
-    var id = UUID()
+    var eventId = UUID()
 }

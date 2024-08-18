@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol PersistableEntity: Codable {
+protocol PersistableEntity: Codable, Identifiable {
     var id: UUID { get }
 }
 

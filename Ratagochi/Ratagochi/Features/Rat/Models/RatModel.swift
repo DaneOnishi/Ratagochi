@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-class RatModel: Codable, Identifiable, PersistableEntity {
+class RatModel: PersistableEntity {
     let id: UUID
     var name: String
     var creationDate: Date
@@ -36,4 +35,5 @@ class RatModel: Codable, Identifiable, PersistableEntity {
         try container.encode(name, forKey: .name)
         try container.encode(creationDate, forKey: .creationDate)
     }
+    
 }

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 @MainActor
-class RatRepository: ObservableObject {
+class RatService: ObservableObject {
     private let databaseService: DatabaseService
     private let eventBus: EventBus
     private var cancellables: Set<AnyCancellable> = []
@@ -42,22 +42,22 @@ class RatRepository: ObservableObject {
                     eventBus.publish(RatStateChangedEvent(newRat: rat))
                 }
             } catch {
-                print("Error fetching initial rats: \(error)")
+                Logger.error("Error fetching initial rats: \(error)")
             }
         }
     }
     
-    func saveRat(_ rat: RatModel) {
+    func save(rat: RatModel) {
         do {
             guard !(try databaseService.exists(RatModel.self, withID: rat.id)) else {
-                print("Rat with ID \(rat.id) exists already")
+                Logger.warning("Rat with ID \(rat.id) exists already")
                 return
             }
             
             try databaseService.save(rat)
             eventBus.publish(RatStateChangedEvent(newRat: rat))
         } catch {
-            print("Error saving rat: \(error)")
+            Logger.error("Error saving rat: \(error)")
         }
     }
     
@@ -69,18 +69,27 @@ class RatRepository: ObservableObject {
         return try databaseService.fetch(RatModel.self, withID: id)
     }
     
-    func updateRat(id: UUID, update: (inout RatModel) -> Void) {
+    func updateRat(withID id: UUID, diff: (inout RatModel) -> Void) {
         do {
             guard var rat = try databaseService.fetch(RatModel.self, withID: id) else {
-                print("Rat not found")
+                Logger.warning("Rat not found")
                 return
             }
             
-            update(&rat)
+            diff(&rat)
             try databaseService.save(rat)
             eventBus.publish(RatStateChangedEvent(newRat: rat))
         } catch {
-            print("Error updating rat state: \(error)")
+            Logger.error("Error updating rat state: \(error)")
+        }
+    }
+    
+    func delete(rat: RatModel) {
+        do {
+            try databaseService.delete(RatModel.self, withID: rat.id)
+            eventBus.publish(RatDeletedEvent(ratId: rat.id))
+        } catch {
+            Logger.error("Error deleting rat: \(error)")
         }
     }
 }

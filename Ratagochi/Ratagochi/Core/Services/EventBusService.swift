@@ -11,11 +11,14 @@ import Combine
 public protocol EventProtocol: Identifiable {
     static var eventType: String { get }
     var eventType: String { get }
+    var eventId: UUID { get }
+    
     var id: UUID { get }
 }
 
 extension EventProtocol {
     var eventType: String { Self.eventType }
+    var id: UUID { eventId }
 }
 
 class EventBus {
@@ -35,6 +38,6 @@ class EventBus {
 struct NotificationEvent: EventProtocol {
     static var eventType: String { "notification" }
     
-    var id: UUID
+    var eventId: UUID
     var message: String
 }

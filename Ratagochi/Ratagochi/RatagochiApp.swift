@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct RatagochiApp: App {
     @StateObject private var appState = AppState()
-    @StateObject private var ratRepository = RatRepository()
+    @StateObject private var ratRepository = RatService()
     
     init() {
         Logger.configure()

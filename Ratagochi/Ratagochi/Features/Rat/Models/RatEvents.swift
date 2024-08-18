@@ -10,11 +10,23 @@ import Foundation
 struct RatStateChangedEvent: EventProtocol {
     static var eventType: String { "ratStateChanged" }
     
-    var id: UUID
+    var eventId: UUID
     var newRat: RatModel
     
     init(newRat: RatModel) {
-        self.id = UUID()
+        self.eventId = UUID()
         self.newRat = newRat
+    }
+}
+
+struct RatDeletedEvent: EventProtocol {
+    static var eventType: String { "RatDeleted" }
+    
+    var eventId: UUID
+    var ratId: UUID
+    
+    init(ratId: UUID) {
+        self.eventId = UUID()
+        self.ratId = ratId
     }
 }

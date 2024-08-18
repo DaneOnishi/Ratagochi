@@ -18,7 +18,7 @@
 		C0DCDC452C5EDC6E009A67BC /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC442C5EDC6E009A67BC /* AppState.swift */; };
 		C0DCDC492C5EDD80009A67BC /* EventBusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC482C5EDD80009A67BC /* EventBusService.swift */; };
 		C0DCDC4B2C5EDD8B009A67BC /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC4A2C5EDD8B009A67BC /* DatabaseService.swift */; };
-		C0DCDC512C5EDDEA009A67BC /* Rat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC502C5EDDEA009A67BC /* Rat.swift */; };
+		C0DCDC512C5EDDEA009A67BC /* RatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC502C5EDDEA009A67BC /* RatModel.swift */; };
 		C0DCDC542C5EDDFE009A67BC /* RatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC532C5EDDFE009A67BC /* RatService.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +34,7 @@
 		C0DCDC442C5EDC6E009A67BC /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C0DCDC482C5EDD80009A67BC /* EventBusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBusService.swift; sourceTree = "<group>"; };
 		C0DCDC4A2C5EDD8B009A67BC /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
-		C0DCDC502C5EDDEA009A67BC /* Rat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rat.swift; sourceTree = "<group>"; };
+		C0DCDC502C5EDDEA009A67BC /* RatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatModel.swift; sourceTree = "<group>"; };
 		C0DCDC532C5EDDFE009A67BC /* RatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,7 +159,7 @@
 		C0DCDC4F2C5EDDD8009A67BC /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C0DCDC502C5EDDEA009A67BC /* Rat.swift */,
+				C0DCDC502C5EDDEA009A67BC /* RatModel.swift */,
 				C062F9642C5EE1CB009F2281 /* RatEvents.swift */,
 			);
 			path = Models;
@@ -258,7 +258,7 @@
 				C0DCDC1C2C5DD348009A67BC /* ContentView.swift in Sources */,
 				C0DCDC1A2C5DD348009A67BC /* RatagochiApp.swift in Sources */,
 				C0D9C66D2C6881740032E40E /* RatsView.swift in Sources */,
-				C0DCDC512C5EDDEA009A67BC /* Rat.swift in Sources */,
+				C0DCDC512C5EDDEA009A67BC /* RatModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
