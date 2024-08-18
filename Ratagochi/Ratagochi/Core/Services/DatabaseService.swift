@@ -6,14 +6,8 @@
 //
 
 import Foundation
-import SwiftData
 
-import SwiftData
-
-import Foundation
-import SwiftData
-
-protocol PersistableEntity: PersistentModel, Codable {
+protocol PersistableEntity: Codable {
     var id: UUID { get }
 }
 
@@ -21,41 +15,63 @@ protocol PersistableEntity: PersistentModel, Codable {
 class DatabaseService {
     static let shared = DatabaseService()
     
-    private init() {}
+    private let fileManager = FileManager.default
+    private let documentsDirectory: URL
     
-    private var container: ModelContainer?
+    private init() {
+        documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }
     
-    func configure(with types: [any PersistentModel.Type]) throws {
-        let schema = Schema(types)
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-        container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+    private func fileURL<T: PersistableEntity>(for type: T.Type) -> URL {
+        return documentsDirectory.appendingPathComponent("\(String(describing: type)).json")
+    }
+    
+    private func fetch<T: PersistableEntity>(_ type: T.Type) throws -> [UUID: T] {
+        let fileURL = fileURL(for: type)
+        guard fileManager.fileExists(atPath: fileURL.path) else { return [:] }
+        
+        let data = try Data(contentsOf: fileURL)
+        let entities = try JSONDecoder().decode([T].self, from: data)
+        return Dictionary(uniqueKeysWithValues: entities.map { ($0.id, $0) })
     }
     
     func save<T: PersistableEntity>(_ entity: T) throws {
-        guard let context = container?.mainContext else {
-            throw DatabaseError.notConfigured
-        }
-        context.insert(entity)
-        try context.save()
+        let fileURL = fileURL(for: T.self)
+        var entities = try fetch(T.self)
+        entities[entity.id] = entity
+        let data = try JSONEncoder().encode(Array(entities.values))
+        try data.write(to: fileURL)
     }
     
     func fetch<T: PersistableEntity>(_ type: T.Type, withID id: UUID) throws -> T? {
-        guard let context = container?.mainContext else {
-            throw DatabaseError.notConfigured
-        }
-        let descriptor = FetchDescriptor<T>(predicate: #Predicate { $0.id == id })
-        return try context.fetch(descriptor).first
+        let entities = try fetch(type)
+        return entities[id]
     }
     
-    func fetch<T: PersistableEntity>(_ type: T.Type, withPredicate predicate: Predicate<T>) throws -> [T] {
-        guard let context = container?.mainContext else {
-            throw DatabaseError.notConfigured
-        }
-        let descriptor = FetchDescriptor<T>(predicate: predicate)
-        return try context.fetch(descriptor)
+    func fetch<T: PersistableEntity>(_ type: T.Type, withPredicate predicate: @escaping (T) -> Bool) throws -> [T] {
+        let entities = try fetch(type)
+        return entities.values.filter(predicate)
+    }
+    
+    func fetchAll<T: PersistableEntity>(_ type: T.Type) throws -> [T] {
+        let entities = try fetch(type)
+        return Array(entities.values)
+    }
+    
+    func exists<T: PersistableEntity>(_ type: T.Type, withID id: UUID) throws -> Bool {
+        let entities = try fetch(type)
+        return entities[id] != nil
+    }
+    
+    func delete<T: PersistableEntity>(_ type: T.Type, withID id: UUID) throws {
+        let fileURL = fileURL(for: T.self)
+        var entities = try fetch(type)
+        entities.removeValue(forKey: id)
+        let data = try JSONEncoder().encode(Array(entities.values))
+        try data.write(to: fileURL)
     }
     
     enum DatabaseError: Error {
-        case notConfigured
+        case entityNotFound
     }
 }

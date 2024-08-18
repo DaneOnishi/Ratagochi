@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C062F9652C5EE1CB009F2281 /* RatEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C062F9642C5EE1CB009F2281 /* RatEvents.swift */; };
+		C0949AA52C71944600F0B42B /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = C0949AA42C71944600F0B42B /* SwiftyBeaver */; };
+		C0949AA72C71949F00F0B42B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0949AA62C71949F00F0B42B /* Logger.swift */; };
+		C0D9C66D2C6881740032E40E /* RatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D9C66C2C6881740032E40E /* RatsView.swift */; };
 		C0DCDC1A2C5DD348009A67BC /* RatagochiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC192C5DD348009A67BC /* RatagochiApp.swift */; };
 		C0DCDC1C2C5DD348009A67BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDC1B2C5DD348009A67BC /* ContentView.swift */; };
 		C0DCDC1E2C5DD349009A67BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0DCDC1D2C5DD349009A67BC /* Assets.xcassets */; };
@@ -21,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		C062F9642C5EE1CB009F2281 /* RatEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatEvents.swift; sourceTree = "<group>"; };
+		C0949AA62C71949F00F0B42B /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		C0D9C66C2C6881740032E40E /* RatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatsView.swift; sourceTree = "<group>"; };
 		C0DCDC162C5DD348009A67BC /* Ratagochi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ratagochi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0DCDC192C5DD348009A67BC /* RatagochiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatagochiApp.swift; sourceTree = "<group>"; };
 		C0DCDC1B2C5DD348009A67BC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -38,12 +43,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0949AA52C71944600F0B42B /* SwiftyBeaver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C0D9C66A2C68814C0032E40E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C0D9C66C2C6881740032E40E /* RatsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		C0DCDC0D2C5DD348009A67BC = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				C0DCDC472C5EDD6D009A67BC /* Services */,
+				C0949AA62C71949F00F0B42B /* Logger.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -127,6 +142,7 @@
 		C0DCDC4D2C5EDDBB009A67BC /* Rat */ = {
 			isa = PBXGroup;
 			children = (
+				C0D9C66A2C68814C0032E40E /* Views */,
 				C0DCDC522C5EDDF6009A67BC /* Services */,
 				C0DCDC4F2C5EDDD8009A67BC /* Models */,
 			);
@@ -174,6 +190,7 @@
 			);
 			name = Ratagochi;
 			packageProductDependencies = (
+				C0949AA42C71944600F0B42B /* SwiftyBeaver */,
 			);
 			productName = Ratagochi;
 			productReference = C0DCDC162C5DD348009A67BC /* Ratagochi.app */;
@@ -204,6 +221,7 @@
 			);
 			mainGroup = C0DCDC0D2C5DD348009A67BC;
 			packageReferences = (
+				C0949AA32C71944600F0B42B /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 			);
 			productRefGroup = C0DCDC172C5DD348009A67BC /* Products */;
 			projectDirPath = "";
@@ -236,8 +254,10 @@
 				C0DCDC4B2C5EDD8B009A67BC /* DatabaseService.swift in Sources */,
 				C0DCDC492C5EDD80009A67BC /* EventBusService.swift in Sources */,
 				C062F9652C5EE1CB009F2281 /* RatEvents.swift in Sources */,
+				C0949AA72C71949F00F0B42B /* Logger.swift in Sources */,
 				C0DCDC1C2C5DD348009A67BC /* ContentView.swift in Sources */,
 				C0DCDC1A2C5DD348009A67BC /* RatagochiApp.swift in Sources */,
+				C0D9C66D2C6881740032E40E /* RatsView.swift in Sources */,
 				C0DCDC512C5EDDEA009A67BC /* Rat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,6 +464,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C0949AA32C71944600F0B42B /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C0949AA42C71944600F0B42B /* SwiftyBeaver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C0949AA32C71944600F0B42B /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
+			productName = SwiftyBeaver;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C0DCDC0E2C5DD348009A67BC /* Project object */;
 }

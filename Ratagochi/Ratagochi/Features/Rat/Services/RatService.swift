@@ -9,17 +9,51 @@ import Foundation
 import Combine
 
 @MainActor
-class RatRepository {
+class RatRepository: ObservableObject {
     private let databaseService: DatabaseService
     private let eventBus: EventBus
+    private var cancellables: Set<AnyCancellable> = []
     
     init(databaseService: DatabaseService = .shared, eventBus: EventBus = .shared) {
         self.databaseService = databaseService
         self.eventBus = eventBus
+        
+        setupEventSubscription()
+    }
+    
+    private func setupEventSubscription() {
+        Logger.debug("Setting up RatRepository Subscription")
+        eventBus.events
+            .sink { [weak self] event in
+                if let requestEvent = event as? RequestAllRatsEvent {
+                    self?.handleRequestAllRatsEvent(requestEvent)
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func handleRequestAllRatsEvent(_ event: RequestAllRatsEvent) {
+        Logger.debug("Starting to fetch all rats")
+        Task {
+            do {
+                let allRats = try await fetchAllRats()
+                Logger.debug("allRats: \(allRats)")
+                for rat in allRats {
+                    eventBus.publish(RatStateChangedEvent(newRat: rat))
+                }
+            } catch {
+                print("Error fetching initial rats: \(error)")
+            }
+        }
     }
     
     func saveRat(_ rat: RatModel) {
         do {
+            guard !(try databaseService.exists(RatModel.self, withID: rat.id)) else {
+                print("Rat with ID \(rat.id) exists already")
+                return
+            }
+            
             try databaseService.save(rat)
             eventBus.publish(RatStateChangedEvent(newRat: rat))
         } catch {
@@ -27,18 +61,15 @@ class RatRepository {
         }
     }
     
-    func fetchRat(withID id: UUID) -> AnyPublisher<RatModel?, Error> {
-        return Future { promise in
-            do {
-                let rat = try self.databaseService.fetch(RatModel.self, withID: id)
-                promise(.success(rat))
-            } catch {
-                promise(.failure(error))
-            }
-        }.eraseToAnyPublisher()
+    private func fetchAllRats() async throws -> [RatModel] {
+        return try databaseService.fetchAll(RatModel.self)
     }
     
-    func updateRatState(id: UUID, update: (inout RatModel) -> Void) {
+    func fetchRat(withID id: UUID) async throws -> RatModel? {
+        return try databaseService.fetch(RatModel.self, withID: id)
+    }
+    
+    func updateRat(id: UUID, update: (inout RatModel) -> Void) {
         do {
             guard var rat = try databaseService.fetch(RatModel.self, withID: id) else {
                 print("Rat not found")

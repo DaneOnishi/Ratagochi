@@ -9,15 +9,13 @@ import Foundation
 import Combine
 
 class AppState: ObservableObject {
-    @Published var rat: RatModel
+    @Published private(set) var rats: [UUID: RatModel] = [:]
     @Published var notifications: [Notification] = []
     
     private var cancellables: Set<AnyCancellable> = []
     
-    init(rat: RatModel = RatModel()) {
-        self.rat = rat
-        
-        // Subscribe to events
+    init() {
+        Logger.debug("Initializing AppState")
         EventBus.shared.events
             .sink { [weak self] event in
                 self?.handleEvent(event)
@@ -25,17 +23,54 @@ class AppState: ObservableObject {
             .store(in: &cancellables)
     }
     
+    func loadInitialState() {
+        EventBus.shared.publish(RequestAllRatsEvent())
+    }
+    
     private func handleEvent(_ event: any EventProtocol) {
-        if let notificationEvent = event as? NotificationEvent {
-            print("Got NotificationEvent")
-            print("Notification: \(notificationEvent.message)")
-        } else if let ratStateEvent = event as? RatStateChangedEvent {
-            print("Got RatStateChangedEvent")
-            print("Rat state changed: rat: \(ratStateEvent.newRat)")
-            self.rat = ratStateEvent.newRat
-        } else {
-            // Handle unknown event types
-            print("Unhandled event type: \(type(of: event))")
+        switch event {
+        case let notificationEvent as NotificationEvent:
+            handleNotificationEvent(notificationEvent)
+        case let ratStateEvent as RatStateChangedEvent:
+            handleRatStateChangedEvent(ratStateEvent)
+        default:
+            Logger.debug("Unhandled event type: \(type(of: event))")
         }
     }
+    
+    private func handleNotificationEvent(_ event: NotificationEvent) {
+        Logger.debug("Got NotificationEvent")
+        Logger.debug("Notification: \(event.message)")
+        // Add the notification to the list if needed
+        // notifications.append(Notification(message: event.message))
+    }
+    
+    private func handleRatStateChangedEvent(_ event: RatStateChangedEvent) {
+        Logger.debug("Got event: \(event)")
+        updateRat(event.newRat)
+    }
+    
+    private func handleRequestAllRatsStateEvent(_ event: RequestAllRatsEvent) {
+
+    }
+    
+    private func updateRat(_ rat: RatModel) {
+        Logger.debug("Updating rat: \(rat)")
+        rats[rat.id] = rat
+    }
+    
+    func getRat(withID id: UUID) -> RatModel? {
+        return rats[id]
+    }
+    
+    func publisherForRat(withID id: UUID) -> AnyPublisher<RatModel?, Never> {
+        return $rats.map { $0[id] }.eraseToAnyPublisher()
+    }
+    
+}
+
+
+struct RequestAllRatsEvent: EventProtocol {
+    static var eventType: String { "requestAllRats" }
+    var id = UUID()
 }
